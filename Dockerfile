@@ -13,6 +13,6 @@ RUN rm -rf /opt/gcptest && \
     # git clone git@github.com:hhue13/gcptest.git && \
     cp gcptest/bin/startContainer.sh /bin/startContainer.sh && \
     chmod +x /bin/startContainer.sh && \
-    echo "Done ..."
+    echo "Done building image ..."
 
 ENTRYPOINT ["/bin/startContainer.sh"]
