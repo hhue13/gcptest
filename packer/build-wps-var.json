@@ -1,0 +1,7 @@
+{
+    "httpHost": "192.168.57.23",
+    "wpsVersion": "v85",
+    "wpsType": "vienna",
+    "nexusUrl": "nexus.hhue.at",
+    "WP_PROFILE_HOME": "/opt/IBM/WebSphere/wp_profile"
+}

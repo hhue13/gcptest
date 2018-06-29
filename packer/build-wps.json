@@ -1,0 +1,48 @@
+{
+    "variables": {
+        "httpHost": "",
+        "wpsVersion": "",
+        "wpsType": "",
+        "nexusUrl": "",
+        "WP_PROFILE_HOME": ""
+    },
+    "builders": [
+        {
+            "type": "docker",
+            "image": "_docker_host_:18444/wps.base.{{user `wpsType`}}.8.5.13.15.15:latest",
+            "commit": "true",
+            "run_command":  ["--entrypoint=", "-d", "-i", "-t", "{{.Image}}", "/bin/bash"],
+            "changes": [
+                "ENTRYPOINT /bin/startContainer.sh"
+            ]
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "script": "buildContainer.sh",
+            "remote_path": "/tmp/buildContainer.sh",
+            "skip_clean": false,
+            "environment_vars": [
+                "httpHost={{ user `httpHost` }}",
+                "wpsVersion={{ user `wpsVersion` }}",
+                "wpsType={{ user `wpsType` }}",
+                "nexusUrl={{ user `nexusUrl` }}",
+                "WP_PROFILE_HOME={{ user `WP_PROFILE_HOME` }}"
+            ]
+        }
+    ],
+    "post-processors": [
+      [
+        {
+          "type": "docker-tag",
+          "repository": "_docker_host_:18444/wps.{{user `wpsType`}}.8.5.13.15.15",
+          "tag": "{{isotime \"2006-01-02\"}}"
+        },
+        "docker-push"
+    ],
+    [
+
+    ]
+  ]
+}
